@@ -64,13 +64,13 @@ set(BUILTIN_ICON_FONT font_awesome_14_1)
 
 # Add board files according to BOARD_TYPE
 # Set default assets if the board uses partition table V2
-if(CONFIG_BOARD_TYPE_BREAD_COMPACT_WIFI)
-    set(BOARD_TYPE "bread-compact-wifi")
+if(CONFIG_BOARD_TYPE_ESP32_S3)
+    set(BOARD_TYPE "esp32-s3")
     set(BUILTIN_TEXT_FONT font_puhui_basic_14_1)
     set(BUILTIN_ICON_FONT font_awesome_14_1)
 
-elseif(CONFIG_BOARD_TYPE_BREAD_COMPACT_WIFI_CAM)
-    set(BOARD_TYPE "bread-compact-wifi-s3cam")
+elseif(CONFIG_BOARD_TYPE_ESP32_S3_CAM)
+    set(BOARD_TYPE "esp32-s3-cam")
     set(BUILTIN_TEXT_FONT font_puhui_basic_16_4)
     set(BUILTIN_ICON_FONT font_awesome_16_4)
     set(DEFAULT_EMOJI_COLLECTION twemoji_64)

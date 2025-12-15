@@ -64,7 +64,7 @@ def get_board_name(folder):
         return "bread-simple"
     if basename.startswith("v0.3") or basename.startswith("v0.4") or basename.startswith("v0.5") or basename.startswith("v0.6"):
         if "WiFi" in basename:
-            return "bread-compact-wifi"
+            return "esp32-s3"
     if basename.startswith("v0.7") or basename.startswith("v0.8") or basename.startswith("v0.9") or basename.startswith("v1.") or basename.startswith("v2."):
         return basename.split("_")[1]
     raise Exception(f"Unknown board name: {basename}")

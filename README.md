@@ -24,8 +24,8 @@ An ESP32-based AI Chatbot with voice interaction capabilities.
 - Camera integration for ESP32-S3 boards with LCD display
 
 ### Board Support
-- **Bread Compact WiFi**: Basic WiFi board with OLED display
-- **Bread Compact WiFi + Camera**: WiFi board with LCD display and camera support
+- **Bread Compact WiFi**: Basic WiFi board with OLED display -> Renamed to **ESP32-S3**
+- **Bread Compact WiFi + Camera**: WiFi board with LCD display and camera support -> Renamed to **ESP32-S3 Camera**
 
 ---
 
@@ -137,12 +137,12 @@ Navigate to **Xiaozhi Assistant** in the menu and configure the following:
 
 #### Board Type
 - Select your board:
-  - **Bread Compact WiFi**: For basic setup with OLED display
-  - **Bread Compact WiFi + LCD + Camera**: For setup with LCD and camera
+  - **ESP32-S3 Board**: For basic setup with OLED display
+  - **ESP32-S3 Camera Board**: For setup with LCD and camera
 
 #### Display Settings
-- For **Bread Compact WiFi**: Select your OLED type (SSD1306 128x32, SSD1306 128x64, or SH1106 128x64)
-- For **Bread Compact WiFi + Camera**: Select your LCD type
+- For **ESP32-S3 Board**: Select your OLED type (SSD1306 128x32, SSD1306 128x64, or SH1106 128x64)
+- For **ESP32-S3 Camera Board**: Select your LCD type
 
 #### Language
 - Select **Indonesian** or **English** as the default language
@@ -262,13 +262,13 @@ Press `Ctrl+]` to exit the monitor.
 
 ## Hardware Wiring
 
-### Bread Compact WiFi (Basic OLED Setup)
+### ESP32-S3 (Basic OLED Setup)
 
-Refer to the board-specific documentation in `main/boards/bread-compact-wifi/` for pin configuration.
+Refer to the board-specific documentation in `main/boards/esp32-s3/` for pin configuration.
 
-### Bread Compact WiFi + Camera
+### ESP32-S3 Camera
 
-Refer to the board-specific documentation in `main/boards/bread-compact-wifi-s3cam/` for pin configuration.
+Refer to the board-specific documentation in `main/boards/esp32-s3-cam/` for pin configuration.
 
 ---
 
