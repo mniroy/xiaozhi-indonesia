@@ -264,11 +264,47 @@ Press `Ctrl+]` to exit the monitor.
 
 ### ESP32-S3 (Basic OLED Setup)
 
-Refer to the board-specific documentation in `main/boards/esp32-s3/` for pin configuration.
+| Periperhal | Pin Name | GPIO |
+|------------|----------|------|
+| **Audio (Mic)** | WS | 4 |
+| | SCK | 5 |
+| | DIN | 6 |
+| **Audio (Speaker)** | DOUT | 7 |
+| | BCLK | 15 |
+| | LRCK | 16 |
+| **Display (OLED)** | SDA | 41 |
+| | SCL | 42 |
+| **Controls** | Built-in LED | 48 |
+| | Boot Button | 0 |
+| | Touch Button | 47 |
+| | Vol+ | 40 |
+| | Vol- | 39 |
 
 ### ESP32-S3 Camera
 
-Refer to the board-specific documentation in `main/boards/esp32-s3-cam/` for pin configuration.
+| Periperhal | Pin Name | GPIO |
+|------------|----------|------|
+| **Audio (Mic)** | WS | 1 |
+| | SCK | 2 |
+| | DIN | 42 |
+| **Audio (Speaker)** | DOUT | 39 |
+| | BCLK | 40 |
+| | LRCK | 41 |
+| **Display (LCD)** | Backlight | 38 |
+| | MOSI | 20 |
+| | CLK | 19 |
+| | DC | 47 |
+| | RST | 21 |
+| | CS | 45 |
+| **Camera** | D0-D7 | 11, 9, 8, 10, 12, 18, 17, 16 |
+| | XCLK | 15 |
+| | PCLK | 13 |
+| | VSYNC | 6 |
+| | HREF | 7 |
+| | SDA | 4 |
+| | SCL | 5 |
+| **Controls** | Built-in LED | 48 |
+| | Boot Button | 0 |
 
 ---
 
