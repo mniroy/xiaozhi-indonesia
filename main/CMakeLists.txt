@@ -75,6 +75,12 @@ elseif(CONFIG_BOARD_TYPE_ESP32_S3_CAM)
     set(BUILTIN_ICON_FONT font_awesome_16_4)
     set(DEFAULT_EMOJI_COLLECTION twemoji_64)
 
+elseif(CONFIG_BOARD_TYPE_XIAO_ESP32S3_SENSE)
+    set(BOARD_TYPE "xiao-esp32s3-sense")
+    set(BUILTIN_TEXT_FONT font_puhui_basic_16_4)
+    set(BUILTIN_ICON_FONT font_awesome_16_4)
+    set(DEFAULT_EMOJI_COLLECTION twemoji_64)
+
 endif()
 
 file(GLOB BOARD_SOURCES

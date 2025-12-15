@@ -56,6 +56,10 @@ choice BOARD_TYPE
         bool "ESP32-S3 Camera Board"
         depends on IDF_TARGET_ESP32S3     
 
+    config BOARD_TYPE_XIAO_ESP32S3_SENSE
+        bool "XIAO ESP32-S3 Sense Board"
+        depends on IDF_TARGET_ESP32S3
+
 
 endchoice
 
@@ -76,7 +80,7 @@ choice DISPLAY_OLED_TYPE
 endchoice
 
 choice DISPLAY_LCD_TYPE
-    depends on BOARD_TYPE_ESP32_S3_CAM
+    depends on BOARD_TYPE_ESP32_S3_CAM || BOARD_TYPE_XIAO_ESP32S3_SENSE
     prompt "LCD Type"
     default LCD_ST7789_240X320
     help

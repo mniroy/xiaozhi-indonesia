@@ -24,8 +24,9 @@ An ESP32-based AI Chatbot with voice interaction capabilities.
 - Camera integration for ESP32-S3 boards with LCD display
 
 ### Board Support
-- **Bread Compact WiFi**: Basic WiFi board with OLED display -> Renamed to **ESP32-S3**
-- **Bread Compact WiFi + Camera**: WiFi board with LCD display and camera support -> Renamed to **ESP32-S3 Camera**
+- **ESP32-S3 Board**: Basic WiFi board with OLED display
+- **ESP32-S3 Camera Board**: WiFi board with LCD display and camera support
+- **XIAO ESP32-S3 Sense Board**: Compact board with built-in camera and PDM microphone
 
 ---
 
@@ -304,6 +305,30 @@ Press `Ctrl+]` to exit the monitor.
 | | SDA | 4 |
 | | SCL | 5 |
 | **Controls** | Built-in LED | 48 |
+| | Boot Button | 0 |
+
+### XIAO ESP32-S3 Sense
+
+| Peripheral | Pin Name | GPIO |
+|------------|----------|------|
+| **Audio (PDM Mic)** | CLK | 42 |
+| | DATA | 41 |
+| **Audio (Speaker)** | BCLK | 7 |
+| | LRCK | 44 |
+| | DOUT | 43 |
+| **Display (LCD)** | MOSI | 9 |
+| | CLK | 8 |
+| | DC | 4 |
+| | RST | 5 |
+| | CS | 3 |
+| **Camera** | D0-D7 | 15, 17, 18, 16, 14, 12, 11, 48 |
+| | XCLK | 10 |
+| | PCLK | 13 |
+| | VSYNC | 38 |
+| | HREF | 47 |
+| | SDA | 40 |
+| | SCL | 39 |
+| **Controls** | Built-in LED | 21 |
 | | Boot Button | 0 |
 
 ---
