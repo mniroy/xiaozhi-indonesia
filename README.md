@@ -1,172 +1,277 @@
-# An MCP-based Chatbot
+# Xiaozhi Indonesia
 
-(English | [中文](README_zh.md) | [日本語](README_ja.md))
+An ESP32-based AI Chatbot with voice interaction capabilities.
 
-## Introduction
+## Features
 
-👉 [Human: Give AI a camera vs AI: Instantly finds out the owner hasn't washed hair for three days【bilibili】](https://www.bilibili.com/video/BV1bpjgzKEhd/)
+### Core Features
+- **Voice Interaction**: Streaming ASR + LLM + TTS architecture for natural conversation
+- **Wi-Fi Connectivity**: Connect to the internet via Wi-Fi
+- **Offline Voice Wake-up**: Uses [ESP-SR](https://github.com/espressif/esp-sr) for local wake word detection
+- **Audio Codec**: OPUS audio codec for efficient audio transmission
+- **Multi-language Support**: English and Indonesian language options
 
-👉 [Handcraft your AI girlfriend, beginner's guide【bilibili】](https://www.bilibili.com/video/BV1XnmFYLEJN/)
+### Display Support
+- **OLED Displays**: SSD1306 (128x32, 128x64), SH1106 (128x64)
+- **LCD Displays**: Various ST7789, ST7735, ST7796, ILI9341, GC9A01 displays
+- **Emoji Display**: Animated emoji expressions
 
-As a voice interaction entry, the XiaoZhi AI chatbot leverages the AI capabilities of large models like Qwen / DeepSeek, and achieves multi-terminal control via the MCP protocol.
+### Communication Protocols
+- [WebSocket Protocol](docs/websocket.md)
+- MQTT + UDP hybrid protocol
 
-<img src="docs/mcp-based-graph.jpg" alt="Control everything via MCP" width="320">
+### Camera Support (Optional)
+- Camera integration for ESP32-S3 boards with LCD display
 
-## Version Notes
+### Board Support
+- **Bread Compact WiFi**: Basic WiFi board with OLED display
+- **Bread Compact WiFi + Camera**: WiFi board with LCD display and camera support
 
-The current v2 version is incompatible with the v1 partition table, so it is not possible to upgrade from v1 to v2 via OTA. For partition table details, see [partitions/v2/README.md](partitions/v2/README.md).
+---
 
-All hardware running v1 can be upgraded to v2 by manually flashing the firmware.
+## Getting Started
 
-The stable version of v1 is 1.9.2. You can switch to v1 by running `git checkout v1`. The v1 branch will be maintained until February 2026.
+This guide will walk you through setting up the development environment from scratch.
 
-### Features Implemented
+### Prerequisites
 
-- Wi-Fi / ML307 Cat.1 4G
-- Offline voice wake-up [ESP-SR](https://github.com/espressif/esp-sr)
-- Supports two communication protocols ([Websocket](docs/websocket.md) or MQTT+UDP)
-- Uses OPUS audio codec
-- Voice interaction based on streaming ASR + LLM + TTS architecture
-- Speaker recognition, identifies the current speaker [3D Speaker](https://github.com/modelscope/3D-Speaker)
-- OLED / LCD display, supports emoji display
-- Battery display and power management
-- Multi-language support (Chinese, English, Japanese)
-- Supports ESP32-C3, ESP32-S3, ESP32-P4 chip platforms
-- Device-side MCP for device control (Speaker, LED, Servo, GPIO, etc.)
-- Cloud-side MCP to extend large model capabilities (smart home control, PC desktop operation, knowledge search, email, etc.)
-- Customizable wake words, fonts, emojis, and chat backgrounds with online web-based editing ([Custom Assets Generator](https://github.com/78/xiaozhi-assets-generator))
+Before you begin, ensure you have:
+- A computer running Windows, macOS, or Linux
+- An ESP32-S3 development board with PSRAM
+- USB cable for connecting the board
+- Basic knowledge of terminal/command line usage
 
-## Hardware
+---
 
-### Breadboard DIY Practice
+## Step 1: Install Visual Studio Code
 
-See the Feishu document tutorial:
+### Download VS Code
 
-👉 ["XiaoZhi AI Chatbot Encyclopedia"](https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb?from=from_copylink)
+1. Go to [https://code.visualstudio.com/](https://code.visualstudio.com/)
+2. Download the installer for your operating system
+3. Run the installer and follow the installation wizard
+4. Launch VS Code after installation
 
-Breadboard demo:
+---
 
-![Breadboard Demo](docs/v1/wiring2.jpg)
+## Step 2: Install ESP-IDF Extension
 
-### Supports 70+ Open Source Hardware (Partial List)
+### Install the Extension
 
-- <a href="https://oshwhub.com/li-chuang-kai-fa-ban/li-chuang-shi-zhan-pai-esp32-s3-kai-fa-ban" target="_blank" title="LiChuang ESP32-S3 Development Board">LiChuang ESP32-S3 Development Board</a>
-- <a href="https://github.com/espressif/esp-box" target="_blank" title="Espressif ESP32-S3-BOX3">Espressif ESP32-S3-BOX3</a>
-- <a href="https://docs.m5stack.com/zh_CN/core/CoreS3" target="_blank" title="M5Stack CoreS3">M5Stack CoreS3</a>
-- <a href="https://docs.m5stack.com/en/atom/Atomic%20Echo%20Base" target="_blank" title="AtomS3R + Echo Base">M5Stack AtomS3R + Echo Base</a>
-- <a href="https://gf.bilibili.com/item/detail/1108782064" target="_blank" title="Magic Button 2.4">Magic Button 2.4</a>
-- <a href="https://www.waveshare.net/shop/ESP32-S3-Touch-AMOLED-1.8.htm" target="_blank" title="Waveshare ESP32-S3-Touch-AMOLED-1.8">Waveshare ESP32-S3-Touch-AMOLED-1.8</a>
-- <a href="https://github.com/Xinyuan-LilyGO/T-Circle-S3" target="_blank" title="LILYGO T-Circle-S3">LILYGO T-Circle-S3</a>
-- <a href="https://oshwhub.com/tenclass01/xmini_c3" target="_blank" title="XiaGe Mini C3">XiaGe Mini C3</a>
-- <a href="https://oshwhub.com/movecall/cuican-ai-pendant-lights-up-y" target="_blank" title="Movecall CuiCan ESP32S3">CuiCan AI Pendant</a>
-- <a href="https://github.com/WMnologo/xingzhi-ai" target="_blank" title="WMnologo-Xingzhi-1.54">WMnologo-Xingzhi-1.54TFT</a>
-- <a href="https://www.seeedstudio.com/SenseCAP-Watcher-W1-A-p-5979.html" target="_blank" title="SenseCAP Watcher">SenseCAP Watcher</a>
-- <a href="https://www.bilibili.com/video/BV1BHJtz6E2S/" target="_blank" title="ESP-HI Low Cost Robot Dog">ESP-HI Low Cost Robot Dog</a>
+1. Open VS Code
+2. Click on the **Extensions** icon in the left sidebar (or press `Ctrl+Shift+X`)
+3. Search for **"ESP-IDF"**
+4. Find **"Espressif IDF"** by Espressif Systems
+5. Click **Install**
 
-<div style="display: flex; justify-content: space-between;">
-  <a href="docs/v1/lichuang-s3.jpg" target="_blank" title="LiChuang ESP32-S3 Development Board">
-    <img src="docs/v1/lichuang-s3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/espbox3.jpg" target="_blank" title="Espressif ESP32-S3-BOX3">
-    <img src="docs/v1/espbox3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/m5cores3.jpg" target="_blank" title="M5Stack CoreS3">
-    <img src="docs/v1/m5cores3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/atoms3r.jpg" target="_blank" title="AtomS3R + Echo Base">
-    <img src="docs/v1/atoms3r.jpg" width="240" />
-  </a>
-  <a href="docs/v1/magiclick.jpg" target="_blank" title="Magic Button 2.4">
-    <img src="docs/v1/magiclick.jpg" width="240" />
-  </a>
-  <a href="docs/v1/waveshare.jpg" target="_blank" title="Waveshare ESP32-S3-Touch-AMOLED-1.8">
-    <img src="docs/v1/waveshare.jpg" width="240" />
-  </a>
-  <a href="docs/v1/lilygo-t-circle-s3.jpg" target="_blank" title="LILYGO T-Circle-S3">
-    <img src="docs/v1/lilygo-t-circle-s3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/xmini-c3.jpg" target="_blank" title="XiaGe Mini C3">
-    <img src="docs/v1/xmini-c3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/movecall-cuican-esp32s3.jpg" target="_blank" title="CuiCan">
-    <img src="docs/v1/movecall-cuican-esp32s3.jpg" width="240" />
-  </a>
-  <a href="docs/v1/wmnologo_xingzhi_1.54.jpg" target="_blank" title="WMnologo-Xingzhi-1.54">
-    <img src="docs/v1/wmnologo_xingzhi_1.54.jpg" width="240" />
-  </a>
-  <a href="docs/v1/sensecap_watcher.jpg" target="_blank" title="SenseCAP Watcher">
-    <img src="docs/v1/sensecap_watcher.jpg" width="240" />
-  </a>
-  <a href="docs/v1/esp-hi.jpg" target="_blank" title="ESP-HI Low Cost Robot Dog">
-    <img src="docs/v1/esp-hi.jpg" width="240" />
-  </a>
-</div>
+### Configure ESP-IDF
 
-## Software
+1. After installation, press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"ESP-IDF: Configure ESP-IDF Extension"** and select it
+3. Choose **"Express"** for the easiest setup
+4. Select ESP-IDF version **5.4 or above** (required for this project)
+5. Choose the installation directory (default is recommended)
+6. Click **Install** and wait for the download and installation to complete
 
-### Firmware Flashing
+> **Note**: The installation may take 10-30 minutes depending on your internet speed.
 
-For beginners, it is recommended to use the firmware that can be flashed without setting up a development environment.
+---
 
-The firmware connects to the official [xiaozhi.me](https://xiaozhi.me) server by default. Personal users can register an account to use the Qwen real-time model for free.
+## Step 3: Clone the Project
 
-👉 [Beginner's Firmware Flashing Guide](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)
+### Using Git Command Line
 
-### Development Environment
+1. Open a terminal (Command Prompt, PowerShell, or Terminal)
+2. Navigate to your desired project directory:
+   ```bash
+   cd /path/to/your/projects
+   ```
+3. Clone the repository:
+   ```bash
+   git clone https://github.com/royyanwicaksono/xiaozhi-indonesia.git
+   ```
+4. Enter the project directory:
+   ```bash
+   cd xiaozhi-indonesia
+   ```
 
-- Cursor or VSCode
-- Install ESP-IDF plugin, select SDK version 5.4 or above
-- Linux is better than Windows for faster compilation and fewer driver issues
-- This project uses Google C++ code style, please ensure compliance when submitting code
+### Using VS Code
 
-### Developer Documentation
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"Git: Clone"** and select it
+3. Enter the repository URL: `https://github.com/royyanwicaksono/xiaozhi-indonesia.git`
+4. Select a folder to clone into
+5. Click **Open** when prompted to open the cloned repository
 
-- [Custom Board Guide](docs/custom-board.md) - Learn how to create custom boards for XiaoZhi AI
-- [MCP Protocol IoT Control Usage](docs/mcp-usage.md) - Learn how to control IoT devices via MCP protocol
-- [MCP Protocol Interaction Flow](docs/mcp-protocol.md) - Device-side MCP protocol implementation
-- [MQTT + UDP Hybrid Communication Protocol Document](docs/mqtt-udp.md)
-- [A detailed WebSocket communication protocol document](docs/websocket.md)
+---
 
-## Large Model Configuration
+## Step 4: Open the Project in VS Code
 
-If you already have a XiaoZhi AI chatbot device and have connected to the official server, you can log in to the [xiaozhi.me](https://xiaozhi.me) console for configuration.
+1. In VS Code, go to **File > Open Folder**
+2. Navigate to and select the `xiaozhi-indonesia` folder
+3. Click **Select Folder** to open the project
+4. Wait for VS Code to load the project and ESP-IDF extension to initialize
 
-👉 [Backend Operation Video Tutorial (Old Interface)](https://www.bilibili.com/video/BV1jUCUY2EKM/)
+---
 
-## Related Open Source Projects
+## Step 5: Set Target Device
 
-For server deployment on personal computers, refer to the following open-source projects:
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"ESP-IDF: Set Espressif Device Target"** and select it
+3. Choose your target chip:
+   - **ESP32-S3** (recommended for full features including wake word)
 
-- [xinnan-tech/xiaozhi-esp32-server](https://github.com/xinnan-tech/xiaozhi-esp32-server) Python server
-- [joey-zhou/xiaozhi-esp32-server-java](https://github.com/joey-zhou/xiaozhi-esp32-server-java) Java server
-- [AnimeAIChat/xiaozhi-server-go](https://github.com/AnimeAIChat/xiaozhi-server-go) Golang server
+---
 
-Other client projects using the XiaoZhi communication protocol:
+## Step 6: Configure with Menuconfig
 
-- [huangjunsen0406/py-xiaozhi](https://github.com/huangjunsen0406/py-xiaozhi) Python client
-- [TOM88812/xiaozhi-android-client](https://github.com/TOM88812/xiaozhi-android-client) Android client
-- [100askTeam/xiaozhi-linux](http://github.com/100askTeam/xiaozhi-linux) Linux client by 100ask
-- [78/xiaozhi-sf32](https://github.com/78/xiaozhi-sf32) Bluetooth chip firmware by Sichuan
-- [QuecPython/solution-xiaozhiAI](https://github.com/QuecPython/solution-xiaozhiAI) QuecPython firmware by Quectel
+### Open Menuconfig
 
-Custom Assets Tools:
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"ESP-IDF: SDK Configuration Editor (Menuconfig)"** and select it
+3. Wait for the configuration editor to open in a new tab
 
-- [78/xiaozhi-assets-generator](https://github.com/78/xiaozhi-assets-generator) Custom Assets Generator (Wake words, fonts, emojis, backgrounds)
+### Configure Xiaozhi Settings
 
-## About the Project
+Navigate to **Xiaozhi Assistant** in the menu and configure the following:
 
-This is an open-source ESP32 project, released under the MIT license, allowing anyone to use it for free, including for commercial purposes.
+#### Board Type
+- Select your board:
+  - **Bread Compact WiFi**: For basic setup with OLED display
+  - **Bread Compact WiFi + LCD + Camera**: For setup with LCD and camera
 
-We hope this project helps everyone understand AI hardware development and apply rapidly evolving large language models to real hardware devices.
+#### Display Settings
+- For **Bread Compact WiFi**: Select your OLED type (SSD1306 128x32, SSD1306 128x64, or SH1106 128x64)
+- For **Bread Compact WiFi + Camera**: Select your LCD type
 
-If you have any ideas or suggestions, please feel free to raise Issues or join the QQ group: 1011329060
+#### Language
+- Select **Indonesian** or **English** as the default language
 
-## Star History
+#### Wake Word (Optional)
+- **Disabled**: No wake word, use button to activate
+- **Wakenet model with AFE**: Enable voice wake word detection (requires ESP32-S3 with PSRAM)
+- **Multinet model (Custom Wake Word)**: Use a custom wake word
 
-<a href="https://star-history.com/#78/xiaozhi-esp32&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=78/xiaozhi-esp32&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=78/xiaozhi-esp32&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=78/xiaozhi-esp32&type=Date" />
- </picture>
-</a> 
+#### Other Options
+- **Flash Assets**: Choose whether to flash default assets
+- **Audio Noise Reduction**: Enable for better audio quality (ESP32-S3 with PSRAM)
+
+### Save Configuration
+
+1. After making your changes, click **Save** at the top of the configuration editor
+2. Close the Menuconfig tab
+
+---
+
+## Step 7: Build the Project
+
+### Using VS Code
+
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"ESP-IDF: Build your Project"** and select it
+3. Wait for the build to complete (this may take several minutes on first build)
+
+### Using Terminal
+
+Alternatively, you can build using the terminal:
+```bash
+idf.py build
+```
+
+> **Note**: The first build will take longer as it downloads dependencies and compiles all components.
+
+---
+
+## Step 8: Flash the Firmware
+
+### Connect Your Device
+
+1. Connect your ESP32 board to your computer via USB
+2. Check which COM port is assigned (Device Manager on Windows, or `/dev/tty*` on Linux/macOS)
+
+### Flash Using VS Code
+
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"ESP-IDF: Select Port to Use"** and select your COM port
+3. Type **"ESP-IDF: Flash your Project"** and select it
+4. Wait for the flashing to complete
+
+### Flash Using Terminal
+
+```bash
+idf.py -p COMX flash
+```
+Replace `COMX` with your actual COM port (e.g., `COM3` on Windows or `/dev/ttyUSB0` on Linux).
+
+---
+
+## Step 9: Monitor Serial Output
+
+### Using VS Code
+
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"ESP-IDF: Monitor Device"** and select it
+
+### Using Terminal
+
+```bash
+idf.py -p COMX monitor
+```
+
+### Exit Monitor
+
+Press `Ctrl+]` to exit the monitor.
+
+---
+
+## Quick Commands Reference
+
+| Action | VS Code Command Palette | Terminal Command |
+|--------|------------------------|------------------|
+| Set Target | ESP-IDF: Set Espressif Device Target | `idf.py set-target esp32s3` |
+| Menuconfig | ESP-IDF: SDK Configuration Editor | `idf.py menuconfig` |
+| Build | ESP-IDF: Build your Project | `idf.py build` |
+| Flash | ESP-IDF: Flash your Project | `idf.py -p COMX flash` |
+| Monitor | ESP-IDF: Monitor Device | `idf.py -p COMX monitor` |
+| Full Flash | - | `idf.py -p COMX flash monitor` |
+| Clean | ESP-IDF: Full Clean | `idf.py fullclean` |
+
+---
+
+## Troubleshooting
+
+### Build Errors
+
+1. **Missing ESP-IDF**: Ensure ESP-IDF 5.4+ is properly installed
+2. **Python errors**: Check that Python is in your PATH
+3. **Submodule issues**: Run `git submodule update --init --recursive`
+
+### Flash Errors
+
+1. **Port not found**: Check USB connection and drivers
+2. **Permission denied (Linux)**: Add user to `dialout` group: `sudo usermod -a -G dialout $USER`
+3. **Boot mode**: Hold the BOOT button while pressing RESET, then release
+
+### Runtime Issues
+
+1. **No audio**: Check microphone and speaker connections
+2. **Wi-Fi not connecting**: Verify SSID and password in configuration
+3. **Wake word not working**: Ensure ESP32-S3 with PSRAM is used
+
+---
+
+## Hardware Wiring
+
+### Bread Compact WiFi (Basic OLED Setup)
+
+Refer to the board-specific documentation in `main/boards/bread-compact-wifi/` for pin configuration.
+
+### Bread Compact WiFi + Camera
+
+Refer to the board-specific documentation in `main/boards/bread-compact-wifi-s3cam/` for pin configuration.
+
+---
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE) for details.

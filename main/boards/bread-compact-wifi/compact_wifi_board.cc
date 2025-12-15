@@ -110,10 +110,10 @@ private:
             app.ToggleChatState();
         });
         touch_button_.OnPressDown([this]() {
-            Application::GetInstance().StartListening();
+            Application::GetInstance().WakeWordInvoke("button");
         });
         touch_button_.OnPressUp([this]() {
-            Application::GetInstance().StopListening();
+            gpio_set_level(BUILTIN_LED_GPIO, 0);
         });
 
         volume_up_button_.OnClick([this]() {
@@ -147,7 +147,7 @@ private:
         });
     }
 
-    // 物联网初始化，逐步迁移到 MCP 协议
+    // IoT initialization, gradually migrating to MCP protocol
     void InitializeTools() {
         static LampController lamp(LAMP_GPIO);
     }
