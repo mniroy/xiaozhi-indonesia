@@ -81,6 +81,20 @@ elseif(CONFIG_BOARD_TYPE_XIAO_ESP32S3_SENSE)
     set(BUILTIN_ICON_FONT font_awesome_16_4)
     set(DEFAULT_EMOJI_COLLECTION twemoji_64)
 
+elseif(CONFIG_BOARD_TYPE_XMINI_C3)
+    set(BOARD_TYPE "xmini-c3")
+    set(BUILTIN_TEXT_FONT font_puhui_basic_14_1)
+    set(BUILTIN_ICON_FONT font_awesome_14_1)
+
+elseif(CONFIG_BOARD_TYPE_XMINI_C3_LITE)
+    set(BOARD_TYPE "xmini-c3-lite")
+    # No display, no fonts needed
+
+elseif(CONFIG_BOARD_TYPE_C3_SUPERMINI)
+    set(BOARD_TYPE "c3-supermini")
+    set(BUILTIN_TEXT_FONT font_puhui_basic_14_1)
+    set(BUILTIN_ICON_FONT font_awesome_14_1)
+
 endif()
 
 file(GLOB BOARD_SOURCES

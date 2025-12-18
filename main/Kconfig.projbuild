@@ -60,6 +60,17 @@ choice BOARD_TYPE
         bool "XIAO ESP32-S3 Sense Board"
         depends on IDF_TARGET_ESP32S3
 
+    config BOARD_TYPE_XMINI_C3
+        bool "XMini-C3 Board"
+        depends on IDF_TARGET_ESP32C3
+
+    config BOARD_TYPE_XMINI_C3_LITE
+        bool "XMini-C3 Lite Board (Walkie-Talkie)"
+        depends on IDF_TARGET_ESP32C3
+
+    config BOARD_TYPE_C3_SUPERMINI
+        bool "C3 Super Mini (DASAI XIAOZHI)"
+        depends on IDF_TARGET_ESP32C3
 
 endchoice
 
@@ -82,9 +93,11 @@ endchoice
 choice DISPLAY_LCD_TYPE
     depends on BOARD_TYPE_ESP32_S3_CAM || BOARD_TYPE_XIAO_ESP32S3_SENSE
     prompt "LCD Type"
-    default LCD_ST7789_240X320
+    default LCD_NO_DISPLAY
     help
         LCD Display Type
+    config LCD_NO_DISPLAY
+        bool "No Display (Headless)"
     config LCD_ST7789_240X320
         bool "ST7789 240*320, IPS"
     config LCD_ST7789_240X320_NO_IPS

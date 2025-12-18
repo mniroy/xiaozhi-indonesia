@@ -13,11 +13,10 @@
 #define AUDIO_I2S_MIC_GPIO_CLK GPIO_NUM_42
 #define AUDIO_I2S_MIC_GPIO_DATA GPIO_NUM_41
 
-// I2S Speaker Pins (directly accessible via expansion board)
-// Note: External I2S speaker/DAC required - configure these pins as needed
-#define AUDIO_I2S_SPK_GPIO_BCLK GPIO_NUM_7
-#define AUDIO_I2S_SPK_GPIO_LRCK GPIO_NUM_44
-#define AUDIO_I2S_SPK_GPIO_DOUT GPIO_NUM_43
+// I2S Speaker Pins for MAX98357A
+#define AUDIO_I2S_SPK_GPIO_BCLK GPIO_NUM_5  // D4 - Bit Clock
+#define AUDIO_I2S_SPK_GPIO_LRCK GPIO_NUM_6  // D5 - Word Select (LRCLK)
+#define AUDIO_I2S_SPK_GPIO_DOUT GPIO_NUM_43 // D6 - Data Out
 
 #define BUILTIN_LED_GPIO GPIO_NUM_21
 #define BOOT_BUTTON_GPIO GPIO_NUM_0
@@ -49,8 +48,8 @@
 #define DISPLAY_BACKLIGHT_PIN GPIO_NUM_NC
 #define DISPLAY_MOSI_PIN GPIO_NUM_9
 #define DISPLAY_CLK_PIN GPIO_NUM_8
-#define DISPLAY_DC_PIN GPIO_NUM_4
-#define DISPLAY_RST_PIN GPIO_NUM_5
+#define DISPLAY_DC_PIN GPIO_NUM_7   // D8 - Data/Command
+#define DISPLAY_RST_PIN GPIO_NUM_44 // D7/RX - Reset
 #define DISPLAY_CS_PIN GPIO_NUM_3
 
 #ifdef CONFIG_LCD_ST7789_240X320

@@ -2,16 +2,20 @@
 #include "button.h"
 #include "codecs/no_audio_codec.h"
 #include "config.h"
+#ifndef CONFIG_LCD_NO_DISPLAY
 #include "display/lcd_display.h"
+#endif
 #include "esp32_camera.h"
 #include "led/single_led.h"
 #include "system_reset.h"
 #include "wifi_board.h"
 
 #include <driver/spi_common.h>
+#ifndef CONFIG_LCD_NO_DISPLAY
 #include <esp_lcd_panel_io.h>
 #include <esp_lcd_panel_ops.h>
 #include <esp_lcd_panel_vendor.h>
+#endif
 #include <esp_log.h>
 
 #if defined(LCD_TYPE_ILI9341_SERIAL)
@@ -60,9 +64,12 @@ static const gc9a01_lcd_init_cmd_t gc9107_lcd_init_cmds[] = {
 class XiaoEsp32S3SenseBoard : public WifiBoard {
 private:
   Button boot_button_;
+#ifndef CONFIG_LCD_NO_DISPLAY
   LcdDisplay *display_;
+#endif
   Esp32Camera *camera_;
 
+#ifndef CONFIG_LCD_NO_DISPLAY
   void InitializeSpi() {
     spi_bus_config_t buscfg = {};
     buscfg.mosi_io_num = DISPLAY_MOSI_PIN;
@@ -121,6 +128,7 @@ private:
         panel_io, panel, DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_OFFSET_X,
         DISPLAY_OFFSET_Y, DISPLAY_MIRROR_X, DISPLAY_MIRROR_Y, DISPLAY_SWAP_XY);
   }
+#endif
 
   void InitializeCamera() {
     static esp_cam_ctlr_dvp_pin_config_t dvp_pin_config = {
@@ -182,13 +190,17 @@ private:
 
 public:
   XiaoEsp32S3SenseBoard() : boot_button_(BOOT_BUTTON_GPIO) {
+#ifndef CONFIG_LCD_NO_DISPLAY
     InitializeSpi();
     InitializeLcdDisplay();
+#endif
     InitializeButtons();
     InitializeCamera();
+#ifndef CONFIG_LCD_NO_DISPLAY
     if (DISPLAY_BACKLIGHT_PIN != GPIO_NUM_NC) {
       GetBacklight()->RestoreBrightness();
     }
+#endif
   }
 
   virtual Led *GetLed() override {
@@ -206,14 +218,23 @@ public:
     return &audio_codec;
   }
 
-  virtual Display *GetDisplay() override { return display_; }
+  virtual Display *GetDisplay() override {
+#ifndef CONFIG_LCD_NO_DISPLAY
+    return display_;
+#else
+    // Return base class NoDisplay instead of nullptr to prevent crashes
+    return Board::GetDisplay();
+#endif
+  }
 
   virtual Backlight *GetBacklight() override {
+#ifndef CONFIG_LCD_NO_DISPLAY
     if (DISPLAY_BACKLIGHT_PIN != GPIO_NUM_NC) {
       static PwmBacklight backlight(DISPLAY_BACKLIGHT_PIN,
                                     DISPLAY_BACKLIGHT_OUTPUT_INVERT);
       return &backlight;
     }
+#endif
     return nullptr;
   }
 
