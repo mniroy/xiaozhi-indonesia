@@ -50,19 +50,19 @@ This board configuration is for the [Seeed Studio XIAO ESP32-S3 Sense](https://w
 > **Important:** The SD pin must be connected to 3.3V or left floating. If connected to GND, the amplifier will be in shutdown mode (no sound).
 
 ### External SPI Display (Optional)
-| Function | GPIO | Pin Label |
-|----------|------|-----------|
-| MOSI | 9 | D9 |
-| CLK | 8 | D8 |
-| DC | 7 | D7 |
-| RST | 44 | D10 |
-| CS | 3 | D2 |
+| Function | Pin | GPIO |
+|----------|-----|------|
+| MOSI | D9 | 9 |
+| CLK | D8 | 8 |
+| DC | D7 | 7 |
+| RST | D10 | 44 |
+| CS | D2 | 3 |
 
 ### Controls
-| Function | GPIO |
-|----------|------|
-| Built-in LED | 21 |
-| Boot Button | 0 |
+| Function | Pin | GPIO |
+|----------|-----|------|
+| Built-in LED | - | 21 |
+| Boot Button | - | 0 |
 
 ---
 
