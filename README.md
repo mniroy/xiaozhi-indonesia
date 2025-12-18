@@ -309,27 +309,27 @@ Press `Ctrl+]` to exit the monitor.
 
 ### XIAO ESP32-S3 Sense
 
-| Peripheral | Pin Name | GPIO |
-|------------|----------|------|
-| **Audio (PDM Mic)** | CLK | 42 |
-| | DATA | 41 |
-| **Audio (Speaker)** | BCLK | 7 |
-| | LRCK | 44 |
-| | DOUT | 43 |
-| **Display (LCD)** | MOSI | 9 |
-| | CLK | 8 |
-| | DC | 4 |
-| | RST | 5 |
-| | CS | 3 |
-| **Camera** | D0-D7 | 15, 17, 18, 16, 14, 12, 11, 48 |
-| | XCLK | 10 |
-| | PCLK | 13 |
-| | VSYNC | 38 |
-| | HREF | 47 |
-| | SDA | 40 |
-| | SCL | 39 |
-| **Controls** | Built-in LED | 21 |
-| | Boot Button | 0 |
+| Peripheral | Pin Name | Pin | GPIO |
+|------------|----------|-----|------|
+| **Audio (PDM Mic)** | CLK | - | 42 |
+| | DATA | - | 41 |
+| **Audio (Speaker)** | BCLK | D4 | 5 |
+| | LRCK | D5 | 6 |
+| | DOUT | D6 | 43 |
+| **Display (LCD)** | MOSI | D9 | 9 |
+| | CLK | D8 | 8 |
+| | DC | D7 | 7 |
+| | RST | D10 | 44 |
+| | CS | D2 | 3 |
+| **Camera** | D0-D7 | - | 15, 17, 18, 16, 14, 12, 11, 48 |
+| | XCLK | - | 10 |
+| | PCLK | - | 13 |
+| | VSYNC | - | 38 |
+| | HREF | - | 47 |
+| | SDA | - | 40 |
+| | SCL | - | 39 |
+| **Controls** | Built-in LED | - | 21 |
+| | Boot Button | - | 0 |
 
 ---
 
